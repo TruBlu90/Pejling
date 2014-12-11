@@ -1,0 +1,35 @@
+<%-- 
+    Document   : indtagsTest
+    Created on : 13-09-2013, 14:45:42
+    Author     : jan
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <script type="text/javascript" src="javascript/jquery-1.10.2.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("ajax").click(function(){
+                    $.ajax({
+                        url: "AjaxIndtagsNr",
+                        type: "GET",
+                        data: $("#input"),
+                        dataType: "json",
+                        success: function(json){
+                            
+                        }
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <input type="text" id="input" />
+        <input type="button" id="ajax" value="press here"/>
+        <p id="p"></p>
+    </body>
+</html>

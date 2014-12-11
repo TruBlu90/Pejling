@@ -1,0 +1,110 @@
+/* 
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+$(document).ready(function() {
+
+    $("#removeChart").attr("disabled", "disabled");
+    $("#savePejlingButton").attr("disabled", "disabled");
+
+    function handleSaveButton()
+    {
+        if ($("#chart").children().length > 0)
+        {
+            if ($("#dateTimePicker").val() !== "" && $("#vandstand").val() !== "")
+            {
+                $("#savePejlingButton").removeAttr("disabled");
+            } else
+            {
+                $("#savePejlingButton").attr("disabled", "disabled");
+            }
+        } else
+        {
+            $("#savePejlingButton").attr("disabled", "disabled");
+        }
+    }
+
+    var inputs = $(":input");
+    $(inputs).change(function(e) {
+        handleSaveButton();
+    });
+
+    $("#showChart").click(function() {
+        
+        handleSaveButton();
+        
+        var data1 = $("#dgunr").val();
+        var data2 = $("#vandstand").val();
+        var data3 = $("#dateTimePicker").val();
+
+        if (data2 === "")
+        {
+            data2 = 0;
+        }
+
+        if (data3 === "")
+        {
+            data3 = "none";
+        }
+
+        $.ajax({
+            url: "GenerateGraph",
+            type: "GET",
+            data: {'dguNr': data1, 'nrOfYears': 1, 'vandstand': data2, 'pejleTidspunkt': data3},
+            dataType: "text",
+            contentType: "image/png",
+            success: function(img) {
+                var imgSrc = "<img id='chartImg' src='data:image/png;base64," + img + "' />";
+                document.getElementById("chart").innerHTML = imgSrc;
+
+                $("#removeChart").removeAttr("disabled");
+            }
+        });
+
+
+
+    });
+
+    $("#updateChart").click(function() {
+        var data1 = $("#dgunr").val();
+        var data2 = $("#nrOfYears").val();
+        var data3 = $("#vandstand").val();
+        var data4 = $("#dateTimePicker").val();
+
+        if (data3 === "")
+        {
+            data3 = 0;
+        }
+
+        if (data4 === "")
+        {
+            data4 = "none";
+        }
+
+        $.ajax({
+            url: "GenerateGraph",
+            type: "GET",
+            data: {'dguNr': data1, 'nrOfYears': data2, 'vandstand': data3, 'pejleTidspunkt': data4},
+            dataType: "text",
+            contentType: "image/png",
+            success: function(img) {
+
+                var imgSrc = "<img id='chartImg' src='data:image/png;base64," + img + "' />";
+                $("#chartImg").remove();
+                document.getElementById("chart").innerHTML = imgSrc;
+
+                $("#removeChart").removeAttr("disabled");
+            }
+        });
+
+    });
+
+    $("#removeChart").click(function() {
+        $("#removeChart").attr("disabled", "disabled");
+        $("#chartImg").remove();
+        
+        handleSaveButton();
+    });
+});
+

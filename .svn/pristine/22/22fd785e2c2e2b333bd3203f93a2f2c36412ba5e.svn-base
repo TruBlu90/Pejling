@@ -1,0 +1,25 @@
+/* 
+    Document   : validation
+    Created on : 19-09-2013, 13:08:25
+    Author     : jan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.error { 
+    color: red;
+}
+
+.validation{
+    border: 1px solid;
+    margin: 10px 15px;
+    padding: 2px 2px 2px 2px;
+    background-repeat: no-repeat;
+    background-position: left;
+    color: #D63301;
+    background-color: #FFCCBA;
+    background-image: url(../images/valiadtion_15px.jpg);
+    padding-left: 28px;
+
+}
+

@@ -1,0 +1,99 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Entities;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author jan
+ */
+public class ReferencePunkt implements Serializable
+{
+    private String kode;
+    private String refpkt_tekst;
+    private double kote;
+    private String mt;
+    private String ou;
+    private String muf;
+    private String tekst;
+    
+        
+    public ReferencePunkt()
+    {
+        
+    }
+    
+    public ReferencePunkt(String kode, String refpkt_tekst, double kote, String mt,
+           String ou, String muf, String tekst)
+    {
+        this.kode = kode;
+        this.refpkt_tekst = refpkt_tekst;
+        this.kote = kote;
+        this.mt = mt;
+        this.ou = ou;
+        this.muf = muf;
+        this.tekst = tekst;
+    }
+    
+
+    public String getKode() {
+        return kode;
+    }
+
+    public void setKode(String kode) {
+        this.kode = kode;
+    }
+
+    public String getRefpkt_tekst() {
+        return refpkt_tekst;
+    }
+
+    public void setRefpkt_tekst(String refpkt_tekst) {
+        this.refpkt_tekst = refpkt_tekst;
+    }
+
+    public double getKote() {
+        return kote;
+    }
+
+    public void setKote(double kote) {
+        this.kote = kote;
+    }
+
+    public String getMt() {
+        return mt;
+    }
+
+    public void setMt(String mt) {
+        this.mt = mt;
+    }
+
+    public String getOu() {
+        return ou;
+    }
+
+    public void setOu(String ou) {
+        this.ou = ou;
+    }
+
+    public String getMuf() {
+        return muf;
+    }
+
+    public void setMuf(String muf) {
+        this.muf = muf;
+    }
+
+    public String getTekst() {
+        return tekst;
+    }
+
+    public void setTekst(String tekst) {
+        this.tekst = tekst;
+    }
+
+    
+}

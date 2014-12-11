@@ -1,0 +1,23 @@
+<%-- 
+    Document   : valuesTestForm
+    Created on : 03-09-2013, 10:15:36
+    Author     : jan
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <h1>Test Form</h1>
+        <h3>Test getIntagsNrbyDGUnr</h3>
+        <form action="FrontControllerServlet" method="get">
+            <input type="text" name="borId"><br>
+            <input type="text" name="indtagsId"><br>
+            <input type="submit" name="getReferencePunktKodeButton" value="Test">
+        </form>
+    </body>
+</html>

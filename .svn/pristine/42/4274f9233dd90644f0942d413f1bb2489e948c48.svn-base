@@ -1,0 +1,48 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Commands;
+
+import CommandSetup.CommandException;
+import CommandSetup.CommandFactory;
+import CommandSetup.TargetCommand;
+import Entities.Indtag;
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ *
+ * @author jan
+ */
+public class TestQueryCommand extends TargetCommand
+{
+    public TestQueryCommand(String target)
+    {
+        super(target);
+    }
+    
+    @Override
+    public String execute(HttpServletRequest request) throws CommandException
+    {
+        /*
+        String dgunr = request.getParameter("dgunr");
+        long indtagsnr = 0;
+        try
+        {
+            indtagsnr = CommandFactory.findDBManager().getIntagsNrbyDGUnr(dgunr);
+        }catch(Exception e)
+        {
+            System.err.println("Something went wrong in Test command: " +e);
+        }
+        Indtag indtag = new Indtag();
+        
+        indtag.setBorId(123);
+        indtag.setIndtagsId(123);
+        indtag.setIndtagsNr(indtagsnr);
+        
+        request.setAttribute("indtag", indtag);
+        */
+        
+        return super.execute(request);
+    }
+}

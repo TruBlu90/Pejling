@@ -1,0 +1,183 @@
+package datasource;
+
+import entities.Boring;
+import entities.LayerSupertype;
+import entities.ReferencePunktKode;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/**
+ *
+ * @author Jonathan Anastasiou & Richard Haley III
+ */
+public class BoringMapper extends AbstractMapper
+{
+
+//    public long getBorIdByDGUnr(Connection con, String dguNr)
+//    {
+//        long borId = 0;
+//        String SQLString = "SELECT b.borid FROM bor$boring$v b, pej$pejling p "
+//                + "WHERE b.dgunr = EXPANDDGUNR(?) "
+//                + "AND "
+//                + "b.borid = p.borid (+) ";
+//
+//        PreparedStatement statement;
+//
+//        try
+//        {
+//            statement = con.prepareStatement(SQLString);
+//            statement.setString(1, dguNr);
+//            ResultSet rs = statement.executeQuery();
+//            if (rs.next())
+//            {
+//                borId = rs.getLong("borid");
+//            }
+//        } catch (SQLException sqle)
+//        {
+//            System.err.println("error in getBorIdByDGUnr = " + sqle);
+//        }
+//
+//        return borId;
+//    }
+    public ReferencePunktKode getReferencePunktKode(Connection con, long borId, long indtagsId)
+    {
+
+        ReferencePunktKode refpktKode = null;
+        String temp;//tempory variable to compare strings
+
+        String SQLString = "SELECT 'T' kode, "
+                + "'Terræn' refpkt_tekst, "
+                + "b.kote kote, "
+                + "TRIM(TO_CHAR(NVL(b.zdvr90, b.zdnn), '990D99')) mt, "
+                + "CASE WHEN b.zdvr90 IS NOT NULL THEN 'm. DVR90' "
+                + "WHEN b.zdnn IS NOT NULL THEN 'm. DNN' END ou, "
+                + "NULL muf, "
+                + "NULL tekst "
+                + "FROM bor$boring$v b, bor$indtag i "
+                + "WHERE b.borid = i.borid (+) "
+                + "AND b.borid = ? "
+                + "AND (i.indtagsid IS NULL OR i.indtagsid = ?) "
+                + "UNION "
+                + "SELECT NVL(fikspktbeskr, 'V') kode, "
+                + "'Fikspunkt' refpkt_tekst, "
+                + "NVL(NVL(NVL(b.fikspktkote, zdvr90+fikspktmoverterraen), zdnn+fikspktmoverterraen), kote+fikspktmoverterraen) kote, "
+                + "TRIM(TO_CHAR(ABS(fikspktmoverterraen), '990D99')) mt, "
+                + "DECODE(fikspktmoverterraen, ABS(fikspktmoverterraen), 'm. over terræn', 'm. under terræn') ou, "
+                + "NULL muf, "
+                + "NULL tekst "
+                + "FROM bor$boring$v b, bor$indtag i, bor$fikspunktbeskr_liste fpb "
+                + "WHERE b.borid = i.borid (+) "
+                + "AND b.fikspktbeskr = fpb.kode (+) "
+                + "AND b.borid = ? "
+                + "AND (i.indtagsid IS NULL OR i.indtagsid = ?) "
+                + "AND (b.fikspktbeskr IS NULL OR b.fikspktbeskr != 'T') "
+                + "UNION "
+                + "SELECT 'M' kode, "
+                + "'Målepunkt'||DECODE(beskrivelse, NULL, NULL, ' *') titel, "
+                + "NVL(kotedvr90, kote) kote, "
+                + "TRIM(TO_CHAR(ABS(hoejde))) mt, "
+                + "DECODE(hoejde, ABS(hoejde), 'm. over terræn', 'm. under terræn') ou, "
+                + "TRIM(TO_CHAR(munderfikspunkt, '990D99')) muf, "
+                + "DECODE(beskrivelse, NULL, NULL, 'Ikke oplyst', '* Beskrivelse mangler.', '* ' || beskrivelse) tekst "
+                + "FROM pej$maalepunkt p "
+                + "WHERE slutdato is null "
+                + "AND borid = ? "
+                + "AND indtagsid = ? "
+                + "ORDER BY "
+                + "kote DESC nulls last";
+
+        PreparedStatement statement;
+
+        try
+        {
+            statement = con.prepareStatement(SQLString);
+            statement.setLong(1, borId);
+            statement.setLong(2, indtagsId);
+            statement.setLong(3, borId);
+            statement.setLong(4, indtagsId);
+            statement.setLong(5, borId);
+            statement.setLong(6, indtagsId);
+            ResultSet rs = statement.executeQuery();
+
+
+            refpktKode = new ReferencePunktKode();
+
+            while (rs.next())
+            {
+                temp = rs.getString("kode");
+
+                if (temp.contains("T"))
+                {
+                    refpktKode.setTerraen(temp);
+                }
+                if (temp.contains("K"))
+                {
+                    refpktKode.setFikspunkt(temp);
+                }
+                if (temp.contains("M"))
+                {
+                    refpktKode.setMaalePunkt(temp);
+                }
+            }
+
+            if (refpktKode.getTerraen() == null)
+            {
+                refpktKode.setTerraen("N/A");
+            }
+            if (refpktKode.getFikspunkt() == null)
+            {
+                refpktKode.setFikspunkt("N/A");
+            }
+            if (refpktKode.getMaalepunkt() == null)
+            {
+                refpktKode.setMaalePunkt("N/A");
+            }
+        } catch (SQLException sqle)
+        {
+            System.err.println("Error in getReferencePunkt = " + sqle);
+        }
+
+        return refpktKode;
+    }
+
+    @Override
+    protected LayerSupertype doLoad(long id, ResultSet rs) throws SQLException
+    {
+        System.out.println("Id in BoringMapper doLoad() is " + id);
+        Boring result = Registry.getInstance().getBoring(id);
+        if (result == null)
+        {
+            result = new Boring(id, rs.getString(2));
+            Registry.getInstance().addBoring(result);
+        }
+        return result;
+    }
+
+    @Override
+    protected void doInsert(LayerSupertype ls, PreparedStatement statement) throws SQLException
+    {
+    }
+
+    @Override
+    protected String findStatement()
+    {
+        return "SELECT b.borid, b.dgunr FROM bor$boring$v b, pej$pejling p "
+                + "WHERE b.dgunr = EXPANDDGUNR(?) "
+                + "AND "
+                + "b.borid = p.borid (+) ";
+    }
+
+    @Override
+    protected String findAllStatement()
+    {
+        return "";
+    }
+
+    @Override
+    protected String insertStatement()
+    {
+        return "";
+    }
+}

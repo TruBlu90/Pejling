@@ -1,0 +1,212 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DBFacade;
+
+import Entities.Indtag;
+import Entities.Pejling;
+import Entities.PreviousPejling;
+import Entities.ReferencePunktKode;
+import Entities.XYPoint;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author jan
+ */
+public class DBFacade 
+{
+   private PejlingDB pdb = null;
+   private BoringDB bdb = null;
+   private IndtagDB idb = null;
+   private static DBFacade instance = null;
+    
+   private DBFacade()
+   {
+       pdb = new PejlingDB();
+       bdb = new BoringDB();
+       idb = new IndtagDB();
+   }
+   
+   public static DBFacade getInstance()
+   {
+       if(instance == null)
+       {
+           instance = new DBFacade();
+       }
+       return instance;
+   }
+   
+   public ArrayList<Indtag> getIntagsNrbyDGUnr(String dgunr) throws SQLException
+   {
+       Connection con = null;
+       ArrayList<Indtag> indtagsnr = new ArrayList<>();
+       try
+       {
+           con = getConnection();
+           indtagsnr = idb.getIndtagsNrbyDGUnr(con, dgunr);
+       }catch(Exception e)
+       {
+           System.err.println("Error in method getIntagsNr = " +e);
+       }
+       finally
+       {
+           releaseConnection(con);
+       }
+       
+       return indtagsnr;
+   }
+   
+   public long getIndtagsIdByBorId(long borId) throws SQLException
+   {
+       Connection con = null;
+       long indtagsId = 0;
+       try
+       {
+           con = getConnection();
+           indtagsId = idb.getIndtagsIdByBorId(con, borId);
+       }catch(Exception e)
+       {
+           System.err.println("Error in method getIndtagsIdByBorId = " +e);
+       }
+       finally
+       {
+           releaseConnection(con);
+       }
+       
+       return indtagsId;
+   }
+   
+   public void insertPejling(Pejling pej) throws SQLException
+   {
+       Connection con = null;
+       
+       try
+       {
+           con = getConnection();
+           pdb.insertPejling(con, pej.getBorId(), pej.getIntagsId(), pej.getPejleTidspunkt(), pej.getReferencePunkt(), 
+                   pej.getVandstand(), pej.getPejleProjekt(), pej.getPejleSituation(), pej.getPejleEkstremer());
+       }catch(Exception e)
+       {
+           System.err.println("Error in insertPejling = " +e);
+       }
+       finally
+       {
+           releaseConnection(con);
+       }
+   } 
+   
+   public PreviousPejling getPreviousPejlingInfo(long borId) throws SQLException
+   {
+       Connection con = null;
+       PreviousPejling prePej = new PreviousPejling();
+       
+       try
+       {
+           con = getConnection();
+           prePej = pdb.getPreviousPejlingInfo(con, borId);
+       }catch(Exception e)
+       {
+           System.err.println("error in getPrevPilingInfo = " +e);
+       }
+       finally
+       {
+           releaseConnection(con);
+       }
+       
+       return prePej;
+   }
+   
+   public ReferencePunktKode getReferencePunktKode(long borId, long indtagsId) throws SQLException
+   {
+       Connection con = null;
+       ReferencePunktKode refpktKode = null;
+       
+       try
+       {
+           con = getConnection();
+           refpktKode = bdb.getReferencePunktKode(con, borId, indtagsId);
+       }catch(Exception e)
+       {
+           System.err.println("Error in getReferencePunkt = " +e);
+       }
+       finally
+       {
+           releaseConnection(con);
+       }
+       
+       return refpktKode;
+   }
+   
+   public long getBorIdByDGUnr(String DGUnr) throws SQLException
+   {
+       Connection con = null;
+       long borId = 0;
+       
+       try
+       {
+           con = getConnection();
+           borId = bdb.getBorIdByDGUnr(con, DGUnr);
+       }catch(Exception e)
+       {
+           System.err.println("Error in getBorIdByDGUnr = " +e);
+       }
+       finally
+       {
+           releaseConnection(con);
+       }
+       
+       return borId;
+   }
+   
+   public ArrayList<XYPoint> getXYPointByDguNr(String dgunr)
+   {
+       Connection con = null;
+       ArrayList<XYPoint> xyPoints = new ArrayList<>();
+       
+       try
+       {
+           con = getConnection();
+           xyPoints = pdb.getXYPointsByDguNr(con, dgunr);
+       }catch(Exception e)
+       {
+           System.err.println("Error in get XYpoints: " +e);
+       }
+       
+       return xyPoints;
+   }
+   
+   private Connection getConnection() throws SQLException
+   {
+     
+       Connection con = null;
+       try
+       {
+           Class.forName("oracle.jdbc.OracleDriver").newInstance();
+           con = DriverManager.getConnection("jdbc:oracle:thin:@geusjup4:1685:jupt", "jan", "jan1234567");
+       }catch(Exception e)
+       {
+           System.err.println("Error in getConnection = " +e);
+       }
+       
+       return con;
+   }
+    
+   private void releaseConnection(Connection con) throws SQLException
+   {
+       if(con != null)
+       {
+           try
+           {
+               con.close();
+           }catch(SQLException sqle)
+           {
+               System.err.println("Error in releaseConnection = " +sqle);
+           }
+       }
+   }
+}

@@ -1,0 +1,55 @@
+<%-- 
+    Document   : pejleSerie
+    Created on : 18-12-2013, 14:05:33
+    Author     : jan
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+        <style type="text/css">
+            body{
+                font-family: 'Lato', sans-serif;
+            }
+
+            #header{               
+                background-image: url(images/fading_background_s.png);
+                background-repeat: repeat-x;
+                border-bottom: 2px solid #E6E6E6;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .imgPosition{
+                padding-top: 65px;
+            }
+
+            .uploadButton{
+                padding-left: 270px;
+            }
+        </style>
+        <title>Indlæs pejleserie</title>
+    </head>
+    <body>
+        <div id="header">
+            <img src="http://www.geus.dk/repository/icons/logo-30.gif" align="left" height="100px">
+            <img src="http://www.geus.dk/repository/icons/dggu-dk.gif" align="left" class="imgPosition">
+        </div>
+        <h3>Indlæs pejleserie</h3>
+        <fieldset>
+            <form action="UploadServlet" enctype="multipart/form-data" method="post">
+                <!--label for="pejleSerie">Upload pejle serie csv fil:</label-->
+                <p style="font-weight: bold;">Upload pejle serie csv fil:</p>
+                <input type="file" id="pejleSerie" name="file"/>
+                <br />
+                <br />
+                <div class="uploadButton">
+                    <input type="submit" value="Upload" />
+                </div>
+            </form>
+        </fieldset>
+    </body>
+</html>

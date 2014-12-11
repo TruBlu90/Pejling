@@ -1,0 +1,210 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package datasource;
+
+import entities.Pejling;
+import entities.PreviousPejling;
+import entities.XYPoint;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author jan
+ */
+public class PejlingMapper
+{
+
+    public void insertPejling(Connection con, long borId, long indtagsId, String pejleTidspunkt, String referencePunkt,
+            String vandstand, String pejleProjekt, String pejleSituation, String pejleEkstremer)
+    {
+        String SQLString = "INSERT INTO MIS.pej$pejling(BORID, INDTAGSID, PEJLETIDSPUNKT, REFERENCEPUNKT, "
+                + "VANDSTAND, PEJLEPROJEKT, PEJLESITUATION, PEJLEEKSTREMER) "
+                + "VALUES(? , TO_NUMBER(?), to_date(REPLACE(REPLACE(REPLACE(REPLACE(?,'/'),'-'),' '),':'), 'ddmmyyyyhh24mi'), "
+                + "DECODE(UPPER(?),'M','M','T','T','K','K'), TO_NUMBER(REPLACE(?, ',', '.'), '999.999'), "
+                + "?, TO_NUMBER(DECODE(?, '0', '0', '1', '1')), DECODE(UPPER(?),'O', 'O', 'T', 'T'))";
+
+        PreparedStatement statement;
+
+        try
+        {
+            statement = con.prepareStatement(SQLString);
+            statement.setLong(1, borId);
+            statement.setLong(2, indtagsId);
+            statement.setString(3, pejleTidspunkt);
+            statement.setString(4, referencePunkt);
+            statement.setString(5, vandstand);
+            statement.setString(6, pejleProjekt);
+            statement.setString(7, pejleSituation);
+            statement.setString(8, pejleEkstremer);
+            statement.executeQuery();
+        } catch (SQLException sqle)
+        {
+            System.err.println("Error in insertPejing = " + sqle);
+        }
+    }
+    
+    public void insertPejleSerie(Connection con, ArrayList<Pejling> pejlings)
+    {
+        String SQLString = "INSERT INTO MIS.pej$pejling(BORID, INDTAGSID, PEJLETIDSPUNKT, REFERENCEPUNKT, "
+                + "VANDSTAND, PEJLEPROJEKT, PEJLESITUATION, PEJLEEKSTREMER) "
+                + "VALUES(? , TO_NUMBER(?), to_date(REPLACE(REPLACE(REPLACE(REPLACE(?,'/'),'-'),' '),':'), 'ddmmyyyyhh24mi'), "
+                + "DECODE(UPPER(?),'M','M','T','T','K','K'), TO_NUMBER(REPLACE(?, ',', '.'), '999.999'), "
+                + "?, TO_NUMBER(DECODE(?, '0', '0', '1', '1')), DECODE(UPPER(?),'O', 'O', 'T', 'T'))";
+        
+        try
+        {
+            PreparedStatement statement = con.prepareStatement(SQLString);
+            
+            for(Pejling p : pejlings)
+            {
+                statement.setLong(1, p.getBorId());
+                statement.setLong(2, p.getIntagsId());
+                statement.setString(3, p.getPejleTidspunkt());
+                statement.setString(4, p.getReferencePunkt());
+                statement.setString(5, p.getVandstand());
+                statement.setString(6, p.getPejleProjekt());
+                statement.setString(7, p.getPejleSituation());
+                statement.setString(8, p.getPejleEkstremer());
+                statement.addBatch();
+            }
+            
+            statement.executeBatch();
+            statement.close();
+        }catch(SQLException sqle)
+        {
+            System.err.println("Error in insertPejleSerie = " + sqle);
+        }
+        
+        
+    }
+
+    public PreviousPejling getPreviousPejlingInfo(Connection con, long borID)
+    {
+        String SQLString = "SELECT b.borid, "
+                + "REPLACE(b.dgunr, ' ') dgunr, "
+                + "NVL(a.kort_tekst, f.kort_tekst) anvendelse, "
+                + "f.kort_tekst formaal, "
+                + "TO_CHAR(b.slutdato, 'YYYY') aar, "
+                + "TRIM(TO_CHAR(b.boringsdybde, '999G990D00')) dybde, "
+                + "(SELECT DECODE(COUNT(DISTINCT stammenr), 0, NULL, COUNT(DISTINCT stammenr)) FROM "
+                + "bor$indtag i WHERE i.borid = b.borid) antal_stammer, "
+                + "b.sted2 tekst, "
+                + "TRIM(TO_CHAR(b.breddegrad, '9999999990.999999')) breddegrad, "
+                + "TRIM(TO_CHAR(b.laengdegrad, '9999999990.999999')) laengdegrad, "
+                + "TRIM(TO_CHAR(b.yutm32euref89, '9999999990')) yeuref89, "
+                + "TRIM(TO_CHAR(b.xutm32euref89, '9999999990')) xeuref89 "
+                + "FROM bor$boring$v b, "
+                + "bor$anvend_liste a, "
+                + "bor$formaal_liste f, "
+                + "bor$fikspunktbeskr_liste fpb "
+                + "WHERE "
+                + "b.fikspktbeskr = fpb.kode (+) "
+                + "AND b.anvendelse = a.kode (+) "
+                + "AND b.formaal = f.kode (+) "
+                + "AND b.borid = ?";
+
+        PreviousPejling prePej = new PreviousPejling();
+        PreparedStatement statement;
+
+        try
+        {
+            statement = con.prepareStatement(SQLString);
+            statement.setLong(1, borID);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+
+            prePej.setBorId(rs.getLong("borid"));
+            prePej.setDgunr(rs.getString("dgunr"));
+            prePej.setAnvendelse(rs.getString("anvendelse"));
+            prePej.setFormaal(rs.getString("formaal"));
+            prePej.setAar(rs.getLong("aar"));
+            prePej.setDybde(rs.getString("dybde"));
+            prePej.setAntalStammer(rs.getLong("antal_stammer"));
+            prePej.setTekst(rs.getString("tekst"));
+            prePej.setBreddegrad(rs.getString("breddegrad"));
+            prePej.setLaengdegrad(rs.getString("laengdegrad"));
+            prePej.setYeuref89(rs.getString("yeuref89"));
+            prePej.setXeuref89(rs.getString("xeuref89"));
+
+        } catch (SQLException sqle)
+        {
+            System.err.println("Error in getPreviousPejlingInfo = " + sqle);
+        }
+
+        return prePej;
+    }
+
+    public ArrayList<XYPoint> getXYPointsByDguNr(Connection con, String dgunr)
+    {
+        ArrayList<XYPoint> xyPoints = new ArrayList<>();
+        /* java.util.Date javaDate;
+         java.sql.Date sqlDate;*/
+        String date;
+
+
+        String SQLString = "SELECT p.pejlingsid, TO_CHAR(p.pejletidspunkt, 'dd/mm/yyyy hh:mm:ss'), p.vandstand "
+                + "FROM pej$pejling p, bor$boring$v b "
+                + "WHERE p.borid (+) = b.borid "
+                + "AND REPLACE(b.dgunr, ' ', '') = ? "
+                + "ORDER BY p.pejletidspunkt ASC";
+
+        PreparedStatement statement;
+
+        try
+        {
+            statement = con.prepareStatement(SQLString);
+            statement.setString(1, dgunr);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next())
+            {
+                /*
+                 sqlDate = rs.getDate(1);
+                 javaDate = sqlDate;
+                 */
+
+                Registry r = Registry.getInstance();
+
+                long pejlingsid = rs.getLong(1);
+                XYPoint newPoint = r.getXYPoint(pejlingsid);
+                
+                if (newPoint == null)
+                {
+                    // not in identity map, must map and add to it
+                    date = rs.getString(2);
+                    double vandstand = rs.getDouble(3);
+                    
+                    XYPoint xy = new XYPoint(date, vandstand);
+                    xy.setPejlingsid(pejlingsid);
+
+                    r.addXYPoint(xy); // add to identity map in Registry
+                    xyPoints.add(xy); // and to ArrayList to return
+                } else
+                {
+                    // found in identity map
+                    xyPoints.add(newPoint);
+                }
+
+                /*
+                 XYPoint xy = new XYPoint();
+                 date = rs.getString(2);
+                 xy.setDate(date);
+                 xy.setVandstand(rs.getDouble(3));
+                 xyPoints.add(xy);
+                 */
+            }
+
+        } catch (SQLException sqle)
+        {
+            System.err.println("Error in getXYPoints: " + sqle);
+        }
+
+        return xyPoints;
+    }
+}

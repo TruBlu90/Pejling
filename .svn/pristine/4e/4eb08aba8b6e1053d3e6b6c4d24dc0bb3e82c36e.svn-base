@@ -1,0 +1,49 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Entities;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author jan
+ */
+public class Boring implements Serializable
+{
+    private long borId;
+    private long dgunr;
+    
+    public Boring()
+    {
+        
+    }
+    
+    public Boring(long borId, long dgunr)
+    {
+        this.borId = borId;
+        this.dgunr = dgunr;
+    }
+    
+    public long getBorId()
+    {
+        return borId;
+    }
+    
+    public void setBorId(long borId)
+    {
+        this.borId = borId;
+    }
+    
+    public long getDGUnr()
+    {
+        return dgunr;
+    }
+    
+    public void setDGUnr(long dgunr)
+    {
+        this.dgunr = dgunr;
+    }
+    
+}

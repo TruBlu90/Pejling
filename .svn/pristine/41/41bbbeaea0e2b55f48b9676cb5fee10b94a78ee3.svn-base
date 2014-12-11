@@ -1,0 +1,67 @@
+<%-- 
+    Document   : getValuesTest
+    Created on : 03-09-2013, 10:06:52
+    Author     : jan
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Page to test SQL queries work</title>
+    </head>
+    <body>
+        <h1>Query Test</h1>
+        <jsp:useBean id="previousPejling" type="Entities.PreviousPejling" scope="request"></jsp:useBean>
+        <table width = "200" border = "1" cellspacing="0">
+            <tr>
+                <td>BorID</td>
+                <td>${previousPejling.borId}</td>
+            </tr>
+            <tr>
+                <td>DGUnr</td>
+                <td>${previousPejling.dgunr}</td>
+            </tr>
+            <tr>
+                <td>Anvendelse</td>
+                <td>${previousPejling.anvendelse}</td>
+            </tr>
+            <tr>
+                <td>Formål</td>
+                <td>${previousPejling.formaal}</td>
+            </tr>
+            <tr>
+                <td>År</td>
+                <td>${previousPejling.aar}</td>
+            </tr>
+            <tr>
+                <td>Dybde</td>
+                <td>${previousPejling.dybde}</td>
+            </tr>
+            <tr>
+                <td>Antal Stammer</td>
+                <td>${previousPejling.antalStammer}</td>
+            </tr>
+            <tr>
+                <td>Tekst</td>
+                <td>${previousPejling.tekst}</td>
+            </tr>
+            <tr>
+                <td>Breddegrad</td>
+                <td>${previousPejling.breddegrad}</td>
+            </tr>
+            <tr>
+                <td>Længdegrad</td>
+                <td>${previousPejling.laengdegrad}</td>
+            </tr>
+            <tr>
+                <td>YEUREF89</td>
+                <td>${previousPejling.yeuref89}</td>
+            </tr>
+            <tr>
+                <td>XEUREF89</td>
+                <td>${previousPejling.xeuref89}</td>
+            </tr>
+    </body>
+</html>

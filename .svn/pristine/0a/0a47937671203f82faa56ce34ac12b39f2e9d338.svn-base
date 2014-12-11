@@ -1,0 +1,70 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package CommandSetup;
+
+import Commands.GetPreviousPejlingCommand;
+import Commands.GetReferencePunktKodeCommand;
+import Commands.IndexCommand;
+import Commands.SavePejlingCommand;
+import Commands.TestQueryCommand;
+import DBFacade.DBFacade;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ *
+ * @author jan
+ */
+public class CommandFactory 
+{
+    public static CommandFactory instance = null;
+    private Map<String,Command> commands = new HashMap<>();
+    private DBFacade facade = DBFacade.getInstance();
+    
+    private CommandFactory()
+    {
+        commands.put("index", new IndexCommand("index.html"));
+        commands.put("savePejling", new SavePejlingCommand("outputTest.jsp"));
+        commands.put("testQuery", new TestQueryCommand("getValuesTest.jsp"));
+        commands.put("getPreviousPejling", new GetPreviousPejlingCommand("getValuesTest.jsp"));
+        commands.put("getReferencePunktKode", new GetReferencePunktKodeCommand("testReferencePunkt.jsp"));
+    }
+    
+    public static CommandFactory getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new CommandFactory();
+        }
+        return instance;
+    }
+    
+    public Command findCommand(String key) throws CommandException
+    {
+        if(key == null)
+        {
+            key = "index";
+        }
+        
+        Command cmd = commands.get(key);
+        
+        if(cmd == null)
+        {
+            throw new CommandException(key + " : not defined as a command string", "errorPage.jsp");
+        }
+        return cmd;
+    }
+    
+    public static DBFacade findDBManager()
+    {
+        return getInstance().getDBManager();
+    }
+    
+    public  DBFacade getDBManager()
+    {
+        return facade;
+    }
+    
+}

@@ -1,0 +1,70 @@
+package commands;
+
+import javax.servlet.http.HttpServletRequest;
+import entities.Pejling;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Jonathan Anastasiou
+ */
+public class SavePejlingCommand extends TargetCommand
+{
+
+    public SavePejlingCommand(String target)
+    {
+        super(target);
+    }
+
+    @Override
+    public String execute(HttpServletRequest request) throws CommandException
+    {
+        String dgunr = request.getParameter("dguNr");
+        long borId = 0;
+        try
+        {
+            borId = CommandFactory.findDBManager().getBorIdByDGUnr(dgunr);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(SavePejlingCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        long indtagsId = Long.parseLong(request.getParameter("indtagsNr"));
+        String pejleTidspunkt = request.getParameter("pejleTidspunkt");
+        String vandstand = request.getParameter("vandstand");
+        String referencePunkt = request.getParameter("referencePunkt");
+        String pejleProjekt = request.getParameter("pejleProjekt");
+        String pejleSituation = request.getParameter("pejleSituation");
+        String pejleEkstremer = request.getParameter("pejleEkstremer");
+
+        Pejling pej;
+
+        if (borId != 0)
+        {
+            pej = new Pejling(borId, indtagsId, pejleTidspunkt, referencePunkt,
+                    vandstand, pejleProjekt, pejleSituation, pejleEkstremer);
+        } else
+        {
+            pej = null;
+        }
+
+        try
+        {
+            if (pej != null)
+            {
+                CommandFactory.findDBManager().insertPejling(pej);
+            } else
+            {
+                System.out.println("Something went wrong");
+            }
+        } catch (Exception ex)
+        {
+            Logger.getLogger(SavePejlingCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        request.setAttribute("pejling", pej);
+
+        return super.execute(request);
+    }
+}

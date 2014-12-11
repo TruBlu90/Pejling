@@ -1,0 +1,8 @@
+$(document).ready(function(){
+    $("showApplet").click(function(){
+        $("chartApplet").show();
+        $("applet").init();
+    });
+});
+
+

@@ -1,0 +1,38 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Entities;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author jan
+ */
+public class Indtag implements Serializable
+{
+
+    private long indtagsnr;
+    
+    public Indtag()
+    {
+        
+    }
+    
+    public Indtag(long indtagsnr)
+    {
+     
+        this.indtagsnr = indtagsnr;
+    }
+    
+    public long getIndtagsNr()
+    {
+        return indtagsnr;
+    }
+    
+    public void setIndtagsNr(long indtagsnr)
+    {
+        this.indtagsnr = indtagsnr;
+    }
+}

@@ -1,0 +1,70 @@
+<%-- 
+    Document   : outputTest
+    Created on : 20-08-2013, 09:53:32
+    Author     : jan
+--%>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel = "stylesheet" type = "text/css" href = "geus.css">
+<title>Output Test</title>
+</head>
+<body>
+<jsp:useBean id="pejling" type="Entities.Pejling" scope="request"></jsp:useBean>
+
+<table width = "200" border = "1" cellspacing="0">
+<tr>
+<td>DGU nr.</td>
+<td>
+<jsp:getProperty name="pejling" property="borId"/>
+</td>
+</tr>
+<tr>
+<td>Indtag</td>
+<td>
+    <jsp:getProperty name="pejling" property="intagsId"/>
+</td>
+</tr>
+<tr>
+<td>Tidspunkt</td>
+<td>
+<jsp:getProperty property="pejleTidspunkt" name="pejling"/>
+</td>
+</tr>
+<tr>
+<td>Pejling m.</td>
+<td>
+<jsp:getProperty property="vandstand" name="pejling"/>m
+</td>
+</tr>
+<tr>
+<td>Pejling Location</td>
+<td>
+<jsp:getProperty property="referencePunkt" name="pejling"/>
+</td>
+</tr>
+<tr>
+<td>Projekt</td>
+<td>
+<jsp:getProperty property="pejleProjekt" name="pejling"/>
+</td>
+</tr>
+<tr>
+<td>Situation</td>
+<td>
+<jsp:getProperty property="pejleSituation" name="pejling"/>
+</td>
+</tr>
+<tr>
+<td>Ekstremer</td>
+<td>
+<jsp:getProperty property="pejleEkstremer" name="pejling"/>
+</td>
+</tr>
+</table>
+</body>
+</html>

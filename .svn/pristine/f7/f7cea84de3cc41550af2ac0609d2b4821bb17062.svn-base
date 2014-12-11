@@ -1,0 +1,28 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Commands;
+
+import CommandSetup.CommandException;
+import CommandSetup.TargetCommand;
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ *
+ * @author jan
+ */
+public class IndexCommand extends TargetCommand
+{
+       public IndexCommand(String target)
+    {
+        super(target);
+    }
+    
+    @Override
+    public String execute(HttpServletRequest request) throws CommandException
+    {
+        return super.execute(request);
+    } 
+    
+}

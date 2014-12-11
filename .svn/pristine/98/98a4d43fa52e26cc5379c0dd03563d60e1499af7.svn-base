@@ -1,0 +1,60 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package entities;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author jan
+ */
+public class ReferencePunktKode implements Serializable 
+{
+    private String terraen; //T
+    private String fikspunkt; //V
+    private String maalepunkt; //M
+    
+    public ReferencePunktKode()
+    {
+        
+    }
+    
+    public ReferencePunktKode(String terraen, String fikspunkt, String maalepunkt)
+    {
+        this.terraen = terraen;
+        this.fikspunkt = fikspunkt;
+        this.maalepunkt = maalepunkt;
+    }
+    
+    public String getTerraen()
+    {
+        return terraen;
+    }
+    
+    public void setTerraen(String terraen)
+    {
+        this.terraen = terraen;
+    }
+    
+    public String getFikspunkt()
+    {
+        return fikspunkt;
+    }
+    
+    public void setFikspunkt(String fikspunkt)
+    {
+        this.fikspunkt = fikspunkt;
+    }
+    
+    public String getMaalepunkt()
+    {
+        return maalepunkt;
+    }
+    
+    public void setMaalePunkt(String maalepunkt)
+    {
+        this.maalepunkt = maalepunkt;
+    }
+}

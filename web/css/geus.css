@@ -1,0 +1,120 @@
+/* 
+    Document   : geus
+    Created on : 19-08-2013, 10:51:39
+    Author     : jan
+    Description:
+        Purpose of the stylesheet follows.
+*/
+@CHARSET "ISO-8859-1";
+BODY {background-color:#FFFFFF; color:#004080; font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+P {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; } 
+PRE {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+A:Link {color:#990000; text-decoration:underline; }
+A:Visited {color:#666666; text-decoration:underline; }
+A:Active {color:#00CC00; text-decoration:underline; }
+A:Hover {color:#666666; text-decoration:underline; }
+/*SPAN {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:11px; }*/
+P.overskrift {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:17px; font-style:normal; }
+.normal {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+.lille {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:11px; }
+.stor {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:17px; }
+INPUT {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+SELECT {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:11px; }
+TABLE {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+TD {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+TH {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; font-weight:bold}
+UL {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+OL {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:12px; }
+/*H1 {font-size:18px; font-weight:bold; }
+H2 {font-size:18px; font-weight:normal; }
+H3 {font-size:16px; font-weight:bold; }*/
+H1 {font-size:16px; font-weight:bold; }
+H2 {font-size:14px; font-weight:bold; }
+H3 {font-size:16px; font-weight:bold; }
+H4 {font-size:14px; font-weight:bold; }
+H5 {font-size:11px; font-weight:bold; }
+H6 {font-size:10px; font-weight:normal; }
+SUB {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:10px; }
+SUP {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; font-size:10px; }
+/*color:black; til color:#111111;*/
+.nav {color:#111111; font-weight:normal; font-size:12px; margin-left:4px; }
+.nav A:link {text-decoration:none; color:#111111; font-weight:bold; }
+.nav A:visited {text-decoration:none; color:#111111; font-weight:bold; }
+.nav A:Hover {text-decoration:none; color:white; background-color:Red; font-weight:bold; }
+
+.navl {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; color:White; background-color:Black; } 
+.navl A:link {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; text-decoration:none; color:white; font-size:9pt; background-color:Black; }
+.navl A:visited {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; text-decoration:none; color:white; font-size:9pt; background-color:Black; }
+.navl A:Hover {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; text-decoration:none; color:white; font-size:9pt; background-color:Red; }
+
+.menulille {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; color:#004080; font-weight:normal; font-size:11px; }
+.menulille A:link {color:#990000; }
+.menulille A:visited {color:#990000; }
+.menulille A:Hover {color:#666666; }
+.hvidbak {background-color:White; }
+/*color:White; til color:#fffeff;*/
+.hvidskrift {color:#fffeff; }
+.tablebak1 {background-color:#006f89}
+.formbak1 {border:1px solid Black; color:#004080; background-color:white; font-size:11px; }
+.formbak2 {border:0px ridge white; color:white; font-weight:bold; background-color:#006f89; font-size:11px; }
+.bodybak1 {background-image:url(barlogo2.gif)}
+.headerbak1 {background-image:url(baggrund-header-top.gif)}
+.contentsbak1 {background-image:url(bg001.gif); height:100%; padding-left:0px; }
+.hojde16 {height:14px; }
+.krummebak {background-color:#e6e6e6; }
+.soegeord {background-color:lime;font-weight:bold;}
+.pesticidbak {background-image:url(http://www.geus.dk/repository/images/pesticid-banner.gif); background-repeat:no-repeat; }
+.icemonbak {background-image:url(http://www.geus.dk/repository/images/icemon-banner.jpg); background-repeat:no-repeat; height:80px; }
+
+.menuover {color:white; font-weight:bold; font-size:12px; background-color:#006f89}
+.menuover A:link {text-decoration:none; color:white; font-weight:bold; background-color:#006f89}
+.menuover A:visited {text-decoration:none; color:white; font-weight:bold; background-color:#006f89}
+.menuover A:Hover {text-decoration:none; color:white; background-color:Red; font-weight:bold; }
+/* begyn ny til forsiden og relaterede link#757575 */
+.menuover-fs {border:0px outset white; font-weight:normal; color:white; font-size:12px; background-color:#006f89}
+.menuover-fs A:link {border:0px outset white; text-decoration:none; color:white; font-weight:normal; background-color:#006f89}
+.menuover-fs A:visited {border:0px outset white; text-decoration:none; color:white; font-weight:normal; background-color:#006f89}
+.menuover-fs A:Hover {border:0px outset white; text-decoration:none; color:white; background-color:Red; font-weight:normal; }
+.menuover-rl {color:yellow; font-weight:normal; font-size:12px; background-color:#006f89}
+.menuover-rl A:link {text-decoration:none; color:yellow; font-weight:normal; background-color:#006f89}
+.menuover-rl A:visited {text-decoration:none; color:yellow; font-weight:normal; background-color:#006f89}
+.menuover-rl A:Hover {text-decoration:none; color:white; background-color:Red; font-weight:normal; }
+a.menuvertikal-fs {border:1px outset white; background-color:#e6e6e6; display:block; width:99%; color:black; font-weight:normal; font-size:12px; text-decoration:none; }
+a.menuvertikal-fs:visited {border:1px outset white; background-color:#e6e6e6; display:block; width:99%; color:black; font-weight:normal; font-size:12px; text-decoration:none; }
+a.menuvertikal-fs:hover {border:1px outset white; background-color:#ff0000; display:block; width:99%; color:white; font-weight:normal; font-size:12px; text-decoration:none; }
+.formbak2-fs {border:1px outset white; color:white; font-weight:normal; background-color:#757575; font-size:11px; }
+.formbak1-fs {border:1px solid Black; color:#004080; background-color:white; font-size:11px; }
+.tablebak1-fs {background-color:#006f89; color:white}
+/* slut ny til forsiden og relaterede link*/
+a.menuvertikal {background-color:#e6e6e6; display:block; width:99%; color:black; font-weight:bold; font-size:12px; text-decoration:none; }
+a.menuvertikal:visited {background-color:#e6e6e6; display:block; width:99%; color:black; font-weight:bold; font-size:12px; text-decoration:none; }
+a.menuvertikal:hover {background-color:#ff0000; display:block; width:99%; color:white; font-weight:bold; font-size:12px; text-decoration:none; }
+
+a.alert {background-color:#e6e6e6; display:block; width:99%; color:red; font-weight:bold; font-size:12px; text-decoration:none; }
+a.alert:visited {background-color:#e6e6e6; display:block; width:99%; color:red; font-weight:bold; font-size:12px; text-decoration:none; }
+a.alert:hover {background-color:#ff0000; display:block; width:99%; color:white; font-weight:bold; font-size:12px; text-decoration:none; }
+/*background-color:White; til background-color:#fefefe;*/
+.forkl {cursor:help; background-color:#fefefe; color:#004080;}
+.lillesort {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; color:#000000; font-weight:normal; font-size:11px; }
+/*jupiter*/
+.juptab1 {padding:0px 10px 0px 5px; border-color:#004080; border-style:solid; border-width:0px 0px 0px 1px; background-color:#fafafa;}
+.juptab1a {padding:0px 10px 0px 5px; border-color:#004080; border-style:solid; border-width:0px 0px 0px 1px; background-color:#eeeeee;}
+.juptab2 {border-top:1px solid; border-left:1px solid; }
+.juptab3 {border-bottom:1px solid; border-right:1px solid; padding-right:3px; padding-left:5px; vertical-align:top; text-align:left; }
+.juptab3r {border-bottom:1px solid; border-right:1px solid; padding-right:3px; padding-left:5px; vertical-align:top; text-align:right; }
+.juph2silver {background-color:#DFDFDF; font-size:14px; padding:2px; font-weight:bold; display:block; margin:16px 0px 2px 0px; }
+.juph3 {font-size:12px; padding:2px; font-weight:bold; display:block; margin:4px 0px 2px 0px; }
+.juph2beige {background-color:#F7EDC1; font-weight:bold; font-size:14px; padding:2px; display:block; margin:16px 0px 2px 0px; }
+.forkljup {cursor:help; background-color:#FFFFE1;font-size:12px;}
+.javalinkjup {cursor:pointer; text-decoration:underline; color:#990000;}
+
+/*color:White; til color:#fffefe;*/
+.gmom  {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif; color: #fffefe;; font-weight:bold; padding:3px;  }
+.gmom A:link {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif;;   text-decoration:none; color:#fffefe;; font-size : 11px;padding:3px; }
+.gmom A:visited {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif;;   text-decoration:none; color:#fffefe;; font-size : 11px;padding:3px; }
+.gmom A:Hover {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif;;  background-color:#008080; text-decoration:none; color:#fffefe;; font-size : 11px;padding:3px; }
+/*color:White; til color:#fefeff;*/
+.gmom1  {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif;; color: #fefeff;  padding:3px; font-size : 12px; }
+.gmom1 A:link {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif;;  text-decoration:none; color:#fefeff; padding:3px; }
+.gmom1 A:visited {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif;; text-decoration:none; color:#fefeff; padding:3px;}
+.gmom1 A:Hover {font-family:Arial,Verdana,'bitstream vera sans',helvetica,sans-serif;; background-color:#0080C0; text-decoration:none; color:#fefeff; padding:3px; }

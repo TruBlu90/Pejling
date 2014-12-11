@@ -1,0 +1,78 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package datasource;
+
+import entities.Indtag;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author jan
+ */
+public class IndtagMapper 
+{
+   public long getIndtagsIdByBorId(Connection con, long borId)
+   {
+     long indtagsId = 0;
+     String SQLString = "SELECT indtagsid FROM bor$indtag WHERE borId = ?";
+     
+       PreparedStatement statement;
+       
+       try
+       {
+           
+           statement = con.prepareStatement(SQLString);
+           statement.setLong(1, borId);
+           ResultSet rs = statement.executeQuery();
+           rs.next();
+           indtagsId = rs.getLong("indtagsid");
+       }catch(SQLException sqle)
+       {
+           System.err.println("Error in getIndtagsIdByBorId = " +sqle);
+       }
+       
+       return indtagsId;
+   }
+   
+   public ArrayList<Indtag> getIndtagsNrbyDGUnr(Connection con, String dgunr)
+   {
+       ArrayList<Indtag> indtagsnr = new ArrayList<>();
+       
+       
+       String SQLString = "SELECT indtagsnr FROM bor$indtag i, bor$boring$v b "
+               + "WHERE b.borid = i.borid (+) "
+               + "AND b.slutdato IS NULL  "
+               + "AND REPLACE(b.dgunr, ' ','') = ? ";
+       
+       PreparedStatement statement;
+       
+       try
+       {
+           
+           statement = con.prepareStatement(SQLString);
+           statement.setString(1, dgunr);
+           ResultSet rs = statement.executeQuery(); 
+           
+           
+           while(rs.next())
+           {
+               Indtag indtag = new Indtag();
+               indtag.setIndtagsNr(rs.getLong("indtagsnr"));
+               indtagsnr.add(indtag);
+                    
+           }
+           
+       }catch(SQLException sqle)
+       {
+           System.err.println("Error in getIndtagsNrbyDGUnr = " +sqle);
+       }
+       
+       return indtagsnr;
+   }
+}

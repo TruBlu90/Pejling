@@ -1,0 +1,47 @@
+package datasource;
+
+import entities.XYPoint;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ *
+ * @author Richard Haley III
+ */
+public class Registry
+{
+
+    private static Registry instance = null;
+    private Map<Long, XYPoint> xyPointIdentityMap = new HashMap<>();
+
+    private Registry()
+    {
+    }
+
+    public static Registry getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new Registry();
+        }
+        return instance;
+    }
+
+    public void addXYPoint(XYPoint xy)
+    {
+        xyPointIdentityMap.put(xy.getPejlingsid(), xy);
+//        System.out.println("XYPoint with pejlingsid " + xy.getPejlingsid() + " added to identity map");
+    }
+
+    public XYPoint getXYPoint(long pejlingsid)
+    {
+//        if (xyPointIdentityMap.get(pejlingsid) == null)
+//        {
+//            System.out.println("XYPoint with pejlingsid " + pejlingsid + " not found in identity map");
+//        } else
+//        {
+//            System.out.println("XYPoint with pejlingsid " + pejlingsid + " retrieved from identity map :)");
+//        }
+        return xyPointIdentityMap.get(pejlingsid);
+    }
+}
